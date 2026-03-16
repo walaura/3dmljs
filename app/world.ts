@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { ParsedData } from '../types';
 
-export const initThree = (canvas: HTMLCanvasElement, parsed: any) => {
+export const initThree = (canvas: HTMLCanvasElement, parsed: ParsedData) => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ canvas });
@@ -22,9 +23,8 @@ export const initThree = (canvas: HTMLCanvasElement, parsed: any) => {
         keys[event.code] = false;
     });
 
-    // Assume parsed has levels as array of {x,y,z}
-    window.lvl = parsed;
-    const levels = parsed?.spot?.body?.level || [];
+    (window as any).lvl = parsed;
+    const levels: string[] = [];
     const blockSize = 1;
 
     levels.forEach((levelStr: string, z: number) => {

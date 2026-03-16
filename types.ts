@@ -32,13 +32,13 @@ export interface AmbientSound {
 }
 
 export interface Head {
-    title: string;
-    blockset: string[];
-    map: string;
-    sky: string;
-    orb: string;
-    ambient_light: string;
-    ambient_sound: string;
+    title: Title;
+    blockset: Blockset[];
+    map: Map;
+    sky: Sky;
+    orb: Orb;
+    ambient_light: AmbientLight;
+    ambient_sound: AmbientSound;
 }
 
 export interface Param {
@@ -59,11 +59,18 @@ export interface Define {
     scale_z: number;
 }
 
+export interface Exit {
+    href: string;
+    trigger?: string;
+}
+
 export interface Create {
-    part?: string | string[];
-    param?: string;
+    part?: Part | Part[];
+    param?: Param;
     define?: Define;
-    exit?: string;
+    exit?: Exit;
+    symbol?: string;
+    block?: string;
 }
 
 export interface Body {

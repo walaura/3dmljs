@@ -1,5 +1,5 @@
 import JSZip from 'jszip';
-import { ParsedData } from './types';
+import { ParsedData } from '../types';
 
 export async function downloadAndUnzipBlocksets(parsedData: ParsedData) {
     // Extract blockset hrefs from parsed data
@@ -36,7 +36,7 @@ export async function downloadAndUnzipBlocksets(parsedData: ParsedData) {
             const zip = await JSZip.loadAsync(blob);
 
             // Process the zip contents
-            const contents = {};
+            const contents: { [key: string]: string } = {};
             for (const [relativePath, file] of Object.entries(zip.files)) {
                 if (!file.dir) {
                     const content = await file.async('string');
