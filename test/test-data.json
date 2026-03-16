@@ -1,0 +1,304 @@
+{
+    "spot": {
+        "head": {
+            "title": {
+                "name": "Flatland.com | Moola | Great Hall"
+            },
+            "blockset": [
+                {
+                    "href": "http://blocks.flatland.com/moola/moola_doors.bset"
+                },
+                {
+                    "href": "http://blocks.flatland.com/moola/moola_flatsun.bset"
+                },
+                {
+                    "href": "http://blocks.flatland.com/xuriel/xuriel_greathall.bset"
+                },
+                {
+                    "href": "http://blocks.flatland.com/flatsets/basic.bset"
+                }
+            ],
+            "map": {
+                "style": "double",
+                "dimensions": "(21,21,2)"
+            },
+            "sky": {
+                "texture": "@basic:clouds.gif"
+            },
+            "orb": {
+                "brightness": "100%",
+                "position": "(0,0)",
+                "color": "(255,255,128)"
+            },
+            "ambient_light": {
+                "brightness": "40%"
+            },
+            "ambient_sound": {
+                "file": "sounds/great_hall_theme.wav"
+            }
+        },
+        "body": {
+            "create": [
+                {
+                    "part": {
+                        "name": "*",
+                        "texture": "@xuriel_greathall:marbtile.jpg",
+                        "translucency": "20%"
+                    },
+                    "symbol": ".,",
+                    "block": "ground"
+                },
+                {
+                    "param": {
+                        "movable": "yes"
+                    },
+                    "part": {
+                        "name": "*",
+                        "style": "scaled"
+                    },
+                    "define": {
+                        "scale_x": 8,
+                        "scale_y": 8,
+                        "scale_z": 8
+                    },
+                    "symbol": "**",
+                    "block": "flatsun"
+                },
+                {
+                    "param": {
+                        "movable": "yes"
+                    },
+                    "part": {
+                        "name": "*",
+                        "style": "scaled",
+                        "faces": "2"
+                    },
+                    "define": {
+                        "scale_x": 8,
+                        "scale_y": -8,
+                        "scale_z": 8
+                    },
+                    "symbol": "*2",
+                    "block": "flatsun"
+                },
+                {
+                    "param": {
+                        "movable": "yes"
+                    },
+                    "define": {
+                        "scale_x": 21,
+                        "scale_y": 21,
+                        "scale_z": 21
+                    },
+                    "symbol": "#1",
+                    "block": "greathall"
+                },
+                {
+                    "param": {
+                        "movable": "yes"
+                    },
+                    "part": {
+                        "name": "*",
+                        "faces": "2"
+                    },
+                    "define": {
+                        "scale_x": 21,
+                        "scale_y": -21,
+                        "scale_z": 21
+                    },
+                    "symbol": "#2",
+                    "block": "greathall"
+                },
+                {
+                    "param": {
+                        "movable": "yes",
+                        "orient": "180"
+                    },
+                    "part": {
+                        "name": "background",
+                        "texture": "../000001/images/thumbnail.jpg"
+                    },
+                    "exit": {
+                        "href": "../000001/index.3dml#red",
+                        "trigger": "step on, click on"
+                    },
+                    "symbol": "NO",
+                    "block": "doorsnorthopen"
+                },
+                {
+                    "param": {
+                        "movable": "yes",
+                        "orient": "180"
+                    },
+                    "part": [
+                        {
+                            "name": "background",
+                            "texture": "../000001/images/thumbnail.jpg"
+                        },
+                        {
+                            "name": "*",
+                            "faces": "2"
+                        }
+                    ],
+                    "define": {
+                        "scale_x": 1,
+                        "scale_y": -1,
+                        "scale_z": 1
+                    },
+                    "symbol": "no",
+                    "block": "doorsnorthopen"
+                },
+                {
+                    "param": {
+                        "movable": "yes",
+                        "orient": "0"
+                    },
+                    "part": {
+                        "name": "background",
+                        "texture": "../000003/images/thumbnail.jpg"
+                    },
+                    "exit": {
+                        "href": "../000003/index.3dml#blue",
+                        "trigger": "step on, click on"
+                    },
+                    "symbol": "SO",
+                    "block": "doorssouthopen"
+                },
+                {
+                    "param": {
+                        "movable": "yes",
+                        "orient": "0"
+                    },
+                    "part": [
+                        {
+                            "name": "*",
+                            "faces": "2"
+                        },
+                        {
+                            "name": "background",
+                            "texture": "../000003/images/thumbnail.jpg"
+                        }
+                    ],
+                    "define": {
+                        "scale_x": 1,
+                        "scale_y": -1,
+                        "scale_z": 1
+                    },
+                    "symbol": "so",
+                    "block": "doorssouthopen"
+                },
+                {
+                    "param": {
+                        "movable": "yes",
+                        "orient": "270"
+                    },
+                    "part": {
+                        "name": "background",
+                        "texture": "../000006/images/thumbnail.jpg"
+                    },
+                    "exit": {
+                        "href": "../000006/index.3dml#wood",
+                        "trigger": "step on, click on"
+                    },
+                    "symbol": "EO",
+                    "block": "doorseastopen"
+                },
+                {
+                    "param": {
+                        "movable": "yes",
+                        "orient": "270"
+                    },
+                    "part": [
+                        {
+                            "name": "*",
+                            "faces": "2"
+                        },
+                        {
+                            "name": "background",
+                            "texture": "../000006/images/thumbnail.jpg"
+                        }
+                    ],
+                    "define": {
+                        "scale_x": 1,
+                        "scale_y": -1,
+                        "scale_z": 1
+                    },
+                    "symbol": "eo",
+                    "block": "doorseastopen"
+                },
+                {
+                    "param": {
+                        "movable": "yes",
+                        "orient": "90"
+                    },
+                    "symbol": "WC",
+                    "block": "doorswestclosed"
+                },
+                {
+                    "param": {
+                        "movable": "yes",
+                        "orient": "90"
+                    },
+                    "part": {
+                        "name": "*",
+                        "faces": "2"
+                    },
+                    "define": {
+                        "scale_x": 1,
+                        "scale_y": -1,
+                        "scale_z": 1
+                    },
+                    "symbol": "wc",
+                    "block": "doorswestclosed"
+                }
+            ],
+            "entrance": [
+                {
+                    "name": "default",
+                    "location": "(11,3,1)",
+                    "angle": "180.0"
+                },
+                {
+                    "name": "red",
+                    "location": "(11,3,1)",
+                    "angle": "180.0"
+                },
+                {
+                    "name": "blue",
+                    "location": "(11,19,1)",
+                    "angle": "0.0"
+                },
+                {
+                    "name": "wood",
+                    "location": "(19,12,1)",
+                    "angle": "270.0"
+                }
+            ],
+            "import": {
+                "href": "scripts/scaleblock.3dml"
+            },
+            "define": {
+                "function": {
+                    "#text": "/* Get the block object */\n\t\tblock = map.get_block(\"#1\");\n\t\tscaleblock(block);\n\t\tblock.location:y = 0;\n\n\t\tblock = map.get_block(\"#2\");\n\t\tscaleblock(block);\n\t\tblock.location:y = 0;\n\t\tblock.location:x = block.location:x - 256;\n\n\t\tblock = map.get_block(\"**\");\n\t\tscaleblock(block);\n\t\tblock.location:y = 128;\n\t\tblock.location:z = block.location:z - 256;\n\t\t//block.rotate_x(90);\n\t\t\n\t\tblock = map.get_block(\"*2\");\n\t\tscaleblock(block);\n\t\tblock.location:y = -128;\n\t\tblock.location:z = block.location:z - 256;\n\t\tblock.location:x = block.location:x - 256;\n\t\t//block.rotate_x(-90);\n\t\t\n\t\tblock = map.get_block(\"NO\");\n\t\tblock.location:y = 0;\n\t\tblock.location:x = block.location:x - 128;\n\t\tblock.location:z = block.location:z + 31;\n\n\t\tblock = map.get_block(\"no\");\n\t\tscaleblock(block);\n\t\tblock.location:y = 0;\n\t\tblock.location:x = block.location:x - 384;\n\t\tblock.location:z = block.location:z + 31;\n\n\t\tblock = map.get_block(\"SO\");\n\t\tblock.location:y = 0;\n\t\tblock.location:x = block.location:x - 128;\n\t\tblock.location:z = block.location:z - 256;\n\n\t\tblock = map.get_block(\"so\");\n\t\tscaleblock(block);\n\t\tblock.location:y = 0;\n\t\tblock.location:x = block.location:x - 384;\n\t\tblock.location:z = block.location:z - 256;\n\n\t\tblock = map.get_block(\"EO\");\n\t\tblock.location:y = 0;\n\t\tblock.location:x = block.location:x + 31;\n\t\tblock.location:z = block.location:z - 128;\n\n\t\tblock = map.get_block(\"eo\");\n\t\tscaleblock(block);\n\t\tblock.location:y = 0;\n\t\tblock.location:x = block.location:x - 225;\n\t\tblock.location:z = block.location:z - 128;\n\n\t\tblock = map.get_block(\"WC\");\n\t\tblock.location:y = 0;\n\t\tblock.location:z = block.location:z - 128;\n\n\t\tblock = map.get_block(\"wc\");\n\t\tscaleblock(block);\n\t\tblock.location:y = 0;\n\t\tblock.location:x = block.location:x - 256;\n\t\tblock.location:z = block.location:z - 128;",
+                    "name": "start"
+                }
+            },
+            "script": {
+                "#text": "block = map.get_block(\"**\");\n\tblock.rotate_y(1);\n\tblock = map.get_block(\"*2\");\n\tblock.rotate_y(1);",
+                "trigger": "timer",
+                "delay": "0.01"
+            },
+            "level": [
+                {
+                    "#text": "., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,\n., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,",
+                    "number": "1"
+                },
+                {
+                    "#text": ".. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. NO no .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. ** *2 .. .. .. .. .. .. .. .. .. \nWC wc .. .. .. .. .. .. .. .. #1 #2 .. .. .. .. .. .. .. EO eo \n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..\n.. .. .. .. .. .. .. .. .. .. SO so .. .. .. .. .. .. .. .. ..",
+                    "number": "2"
+                }
+            ]
+        },
+        "version": "3.3"
+    }
+}

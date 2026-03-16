@@ -1,0 +1,268 @@
+<spot version="3.3"> 
+<head> 
+<title name="Flatland.com | Moola | Great Hall" />
+<blockset href="http://blocks.flatland.com/moola/moola_doors.bset" />
+<blockset href="http://blocks.flatland.com/moola/moola_flatsun.bset" />
+<blockset href="http://blocks.flatland.com/xuriel/xuriel_greathall.bset" />
+<blockset href="http://blocks.flatland.com/flatsets/basic.bset" /> 
+<map style="double" dimensions="(21,21,2)" /> 
+<sky texture="@basic:clouds.gif" />
+<orb brightness="100%" position="(0,0)" color="(255,255,128)" />
+<ambient_light brightness="40%" />
+<ambient_sound file="sounds/great_hall_theme.wav" />
+</head> 
+
+<body> 
+
+<!-- THE MARBLE FLOOR, TRANSLUCENT TO SHOW "REFLECTED" SCENE -->
+<create symbol=".," block="ground">
+	<part name="*" texture="@xuriel_greathall:marbtile.jpg" translucency="20%" />
+</create>
+
+<!-- THE FLATLAND SUN -->
+<create symbol="**" block="flatsun">
+	<param movable="yes" />
+	<part name="*" style="scaled" />
+	<define>
+		<scale_x>8.0</scale_x>
+		<scale_y>8.0</scale_y>
+		<scale_z>8.0</scale_z>
+	</define>
+</create>
+
+<!-- THE FLATLAND SUN -->
+<create symbol="*2" block="flatsun">
+	<param movable="yes" />
+	<part name="*" style="scaled" faces="2" />
+	<define>
+		<scale_x>8.0</scale_x>
+		<scale_y>-8.0</scale_y>
+		<scale_z>8.0</scale_z>
+	</define>
+</create>
+
+<!-- THE GREAT HALL, TO BE SCALED -->
+<create symbol="#1" block="greathall">
+	<param movable="yes" />
+	<define>
+		<scale_x>21.0</scale_x>
+		<scale_y>21.0</scale_y>
+		<scale_z>21.0</scale_z>
+	</define>
+</create>
+
+<!-- THE INVERTED GREAT HALL BLOCK, TO BE SCALED AND
+	FLIPPED FOR REFLECTION IN MARBLE FLOOR -->
+<create symbol="#2" block="greathall">
+	<param movable="yes" />
+	<part name="*" faces="2" />
+	<define>
+		<scale_x>21.0</scale_x>
+		<scale_y>-21.0</scale_y>
+		<scale_z>21.0</scale_z>
+	</define>
+</create>
+
+<entrance name="default" location="(11,3,1)" angle="180.0" /> 
+<entrance name="red" location="(11,3,1)" angle="180.0" />
+<entrance name="blue" location="(11,19,1)" angle="0.0" />
+<entrance name="wood" location="(19,12,1)" angle="270.0" />
+
+<!-- THE DOORS: OPENED/CLOSED AND REFLECTED -->
+
+<create symbol="NO" block="doorsnorthopen">
+	<param movable="yes" orient="180" />
+	<part name="background" texture="../000001/images/thumbnail.jpg" />
+	<exit href="../000001/index.3dml#red" trigger="step on, click on" />
+</create>
+
+<create symbol="no" block="doorsnorthopen">
+	<param movable="yes" orient="180" />
+	<part name="background" texture="../000001/images/thumbnail.jpg" />
+	<part name="*" faces="2" />
+	<define>
+		<scale_x>1.0</scale_x>
+		<scale_y>-1.0</scale_y>
+		<scale_z>1.0</scale_z>
+	</define>	
+</create>
+
+<create symbol="SO" block="doorssouthopen">
+	<param movable="yes" orient="0" />
+	<part name="background" texture="../000003/images/thumbnail.jpg" />
+	<exit href="../000003/index.3dml#blue" trigger="step on, click on" />
+</create>
+
+<create symbol="so" block="doorssouthopen">
+	<param movable="yes" orient="0" />
+	<part name="*" faces="2" />
+	<define>
+		<scale_x>1.0</scale_x>
+		<scale_y>-1.0</scale_y>
+		<scale_z>1.0</scale_z>
+	</define>	
+	<part name="background" texture="../000003/images/thumbnail.jpg" />
+</create>
+
+<create symbol="EO" block="doorseastopen">
+	<param movable="yes" orient="270" />
+	<part name="background" texture="../000006/images/thumbnail.jpg" />
+	<exit href="../000006/index.3dml#wood" trigger="step on, click on" />
+</create>
+
+<create symbol="eo" block="doorseastopen">
+	<param movable="yes" orient="270" />
+	<part name="*" faces="2" />
+	<define>
+		<scale_x>1.0</scale_x>
+		<scale_y>-1.0</scale_y>
+		<scale_z>1.0</scale_z>
+	</define>	
+	<part name="background" texture="../000006/images/thumbnail.jpg" />
+</create>
+
+<create symbol="WC" block="doorswestclosed">
+	<param movable="yes" orient="90" />
+</create>
+
+<create symbol="wc" block="doorswestclosed">
+	<param movable="yes" orient="90" />
+	<part name="*" faces="2" />
+	<define>
+		<scale_x>1.0</scale_x>
+		<scale_y>-1.0</scale_y>
+		<scale_z>1.0</scale_z>
+	</define>	
+</create>
+
+<!-- IMPORT THE SCALE FUNCTION -->
+<import href="scripts/scaleblock.3dml" />
+
+<!-- AT START, SCALE AND POSITION BLOCKS -->
+<define>
+	<function name="start">
+		/* Get the block object */
+		block = map.get_block("#1");
+		scaleblock(block);
+		block.location:y = 0;
+
+		block = map.get_block("#2");
+		scaleblock(block);
+		block.location:y = 0;
+		block.location:x = block.location:x - 256;
+
+		block = map.get_block("**");
+		scaleblock(block);
+		block.location:y = 128;
+		block.location:z = block.location:z - 256;
+		//block.rotate_x(90);
+		
+		block = map.get_block("*2");
+		scaleblock(block);
+		block.location:y = -128;
+		block.location:z = block.location:z - 256;
+		block.location:x = block.location:x - 256;
+		//block.rotate_x(-90);
+		
+		block = map.get_block("NO");
+		block.location:y = 0;
+		block.location:x = block.location:x - 128;
+		block.location:z = block.location:z + 31;
+
+		block = map.get_block("no");
+		scaleblock(block);
+		block.location:y = 0;
+		block.location:x = block.location:x - 384;
+		block.location:z = block.location:z + 31;
+
+		block = map.get_block("SO");
+		block.location:y = 0;
+		block.location:x = block.location:x - 128;
+		block.location:z = block.location:z - 256;
+
+		block = map.get_block("so");
+		scaleblock(block);
+		block.location:y = 0;
+		block.location:x = block.location:x - 384;
+		block.location:z = block.location:z - 256;
+
+		block = map.get_block("EO");
+		block.location:y = 0;
+		block.location:x = block.location:x + 31;
+		block.location:z = block.location:z - 128;
+
+		block = map.get_block("eo");
+		scaleblock(block);
+		block.location:y = 0;
+		block.location:x = block.location:x - 225;
+		block.location:z = block.location:z - 128;
+
+		block = map.get_block("WC");
+		block.location:y = 0;
+		block.location:z = block.location:z - 128;
+
+		block = map.get_block("wc");
+		scaleblock(block);
+		block.location:y = 0;
+		block.location:x = block.location:x - 256;
+		block.location:z = block.location:z - 128;
+		
+	</function>
+</define>
+
+<script trigger="timer" delay="0.01">
+	block = map.get_block("**");
+	block.rotate_y(1);
+	block = map.get_block("*2");
+	block.rotate_y(1);
+</script>
+
+<level number="1">  
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+</level>  
+
+<level number="2">  
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. NO no .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. ** *2 .. .. .. .. .. .. .. .. .. 
+WC wc .. .. .. .. .. .. .. .. #1 #2 .. .. .. .. .. .. .. EO eo 
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+.. .. .. .. .. .. .. .. .. .. SO so .. .. .. .. .. .. .. .. ..
+</level>
+
+</body> 
+</spot> 
