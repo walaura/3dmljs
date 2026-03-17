@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ImageProps {
-    src?: string;
+    src?: string | Blob;
     alt: string;
     maxWidth?: string;
     maxHeight?: string;
@@ -10,13 +10,29 @@ interface ImageProps {
 const Image: React.FC<ImageProps> = ({ src, alt, maxWidth = '200px', maxHeight = '200px' }) => {
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(false);
+    const imageSrc = React.useMemo(() => {
+        if (src instanceof Blob) {
+            return URL.createObjectURL(src);
+        }
+        return src;
+    }, [src]);
+
+    React.useEffect(() => {
+        return () => {
+            if (imageSrc && typeof imageSrc === 'string') {
+                URL.revokeObjectURL(imageSrc);
+            }
+        };
+    }, [imageSrc]);
+
+    const realSrc = src instanceof Blob ? undefined : src;
 
     return (
         <div className="flex flex-col items-center gap-2 p-2 bg-gray-100 dark:bg-gray-700 rounded">
-            {src ? (
+            {realSrc ? (
                 <>
                     <img
-                        src={src}
+                        src={realSrc}
                         alt={alt}
                         style={{ maxWidth, maxHeight }}
                         onLoad={() => setLoading(false)}

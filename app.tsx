@@ -10,42 +10,17 @@ import { Spot, ParsedData } from './types';
 
 interface BlockInfo {
     name: string;
-    textures: Array<{ name: string; data?: string; isImage?: boolean }>;
+    textures: Array<{ name: string; data?: Blob | string; isImage?: boolean }>;
     type: string;
 }
 
 const App: React.FC = () => {
     const [text, setText] = React.useState<string>('');
     const [parsed, setParsed] = React.useState<ParsedData | null>(null);
-    const [blockData, setBlockData] = React.useState<{ [key: string]: string }>({});
+    const [blockData, setBlockData] = React.useState<{ fetched?: boolean }>({});
     const [blockInfo, setBlockInfo] = React.useState<BlockInfo[]>([]);
 
-    // Initialize dark mode from localStorage or system preference
-    React.useEffect(() => {
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const shouldBeDark = savedTheme ? savedTheme === 'dark' : prefersDark;
-
-        if (shouldBeDark) {
-            document.documentElement.classList.add('dark');
-        }
-
-        // Handle theme toggle button
-        const themeToggle = document.getElementById('theme-toggle');
-        if (themeToggle) {
-            const toggleDarkMode = () => {
-                const isDark = document.documentElement.classList.contains('dark');
-                if (isDark) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('theme', 'light');
-                } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('theme', 'dark');
-                }
-            };
-            themeToggle.addEventListener('click', toggleDarkMode);
-        }
-    }, []);
+    // Dark mode removed for now
 
     React.useEffect(() => {
         const fetchBlockData = async () => {
@@ -62,14 +37,14 @@ const App: React.FC = () => {
                                 const blockFiles = JSON.parse(cachedData);
 
                                 // First pass: collect all texture files
-                                const textureMap: { [key: string]: string } = {};
+                                const textureMap: { [key: string]: Blob | undefined } = {};
                                 Object.entries(blockFiles).forEach(([filePath, content]: [string, any]) => {
                                     if (typeof content === 'string') {
                                         const isImage = /\.(gif|jpg|jpeg|png|bmp)$/i.test(filePath);
                                         if (isImage) {
-                                            // Store image file paths and content as data URLs
+                                            // Store image file paths and content as Blobs
                                             const fileName = filePath.split('/').pop() || filePath;
-                                            // For text-based images (GIF as text), create a data URL
+                                            // For text-based images (GIF as text), create a Blob
                                             const ext = filePath.split('.').pop()?.toLowerCase() || '';
                                             const mimeType = {
                                                 'gif': 'image/gif',
@@ -80,18 +55,17 @@ const App: React.FC = () => {
                                             }[ext] || 'image/gif';
 
                                             try {
-                                                // Try to convert to data URL
+                                                // Try to convert to Blob directly
                                                 if (content.includes('data:')) {
-                                                    textureMap[fileName] = content;
+                                                    textureMap[fileName] = new Blob([content]);
                                                 } else if (typeof content === 'string' && content.length > 0) {
-                                                    // If it's already binary-like content, create data URL
+                                                    // If it's already binary-like content, create Blob
                                                     const binaryStr = content;
-                                                    const dataUrl = `data:${mimeType};base64,${btoa(binaryStr)}`;
-                                                    textureMap[fileName] = dataUrl;
+                                                    textureMap[fileName] = new Blob([binaryStr], { type: mimeType });
                                                 }
                                             } catch (e) {
-                                                // If encoding fails, just store the path
-                                                textureMap[fileName] = filePath;
+                                                // If encoding fails, just store the path as a string for reference
+                                                textureMap[fileName] = undefined;
                                             }
                                         }
                                     }
@@ -129,7 +103,7 @@ const App: React.FC = () => {
                                                     textures.push({
                                                         name: texName,
                                                         isImage,
-                                                        data: imageData
+                                                        data: imageData as string | undefined
                                                     });
                                                 });
 
@@ -151,7 +125,7 @@ const App: React.FC = () => {
                     }
                 }
                 setBlockInfo(blocks);
-                setBlockData(blocks.length > 0 ? { fetched: true } : {});
+                setBlockData(blocks.length > 0 ? { fetched: true } : ({} as const));
             } catch (error) {
                 console.error('Error loading block data:', error);
             }
@@ -190,7 +164,7 @@ const App: React.FC = () => {
         <Sidebar position="left">
             <Expander title="Raw 3DML" content={text} monospace={true} floating={false} />
             <Expander title="Parsed 3DML Output" content={JSON.stringify(parsed, null, 2)} monospace={true} floating={false} />
-            <Expander title="Block Data" content={JSON.stringify(blockInfo.map(b => ({ ...b, textures: b.textures.map(t => t.name) })), null, 2)} monospace={true} floating={false} />
+            <Expander title="Block Data" content={JSON.stringify(blockData, null, 2)} monospace={true} floating={false} />
             {blockInfo.map((block, idx) => (
                 <Expander
                     key={idx}

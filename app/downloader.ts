@@ -26,9 +26,13 @@ export async function downloadAndUnzipBlocksets(parsedData: ParsedData) {
 
         try {
             console.log(`Downloading blockset: ${href}`);
-            const response = await fetch(href);
+            // Add CORS headers for better cross-origin handling
+            const response = await fetch(href, {
+                mode: 'cors',
+                credentials: 'omit', // Use default credentials setting
+            });
             if (!response.ok) {
-                console.error(`Failed to download ${href}: ${response.status}`);
+                console.error(`Failed to download ${href}: ${response.status} ${response.statusText}`);
                 continue;
             }
 
