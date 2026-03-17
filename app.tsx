@@ -78,7 +78,7 @@ const App: React.FC = () => {
                                                 'jpeg': 'image/jpeg',
                                                 'bmp': 'image/bmp'
                                             }[ext] || 'image/gif';
-                                            
+
                                             try {
                                                 // Try to convert to data URL
                                                 if (content.includes('data:')) {
